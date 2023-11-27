@@ -1,7 +1,7 @@
 <template>
   <a-layout-content style="padding: 0 25px" class="content">
     <div :style="{
-      background: '#EEEEEE',
+      background: '#fff',
       padding: '24px',
       minHeight: '280px',
       borderRadius: '5px',
@@ -14,6 +14,6 @@
   
 <style scoped>
 .content {
-  margin-top: 100px;
+  margin-top: 75px;
 }
 </style>
