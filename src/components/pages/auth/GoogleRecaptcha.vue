@@ -23,9 +23,7 @@
         siteKey: process.env.VUE_APP_RECAPTCHA_SITE_KEY,
         response: {
           token: undefined,
-          success: false,
-          expired: false,
-          error: false
+          status: undefined
         }
       }
     },
@@ -33,30 +31,24 @@
     methods: {
       emitVerify(response) {
         this.response.token = response;
-        this.response.expired = false;
-        this.response.error = false;
-        this.response.success = true;
+        this.response.status = 'success'
 
         this.$emit('verify', this.response);
       },
 
       emitExpired() {
         this.response.token = undefined;
-        this.response.expired = true;
-        this.response.error = false;
-        this.response.success = false;
+        this.response.status = 'expired'
 
         this.$emit('expired', this.response);
       },
 
       emitError() {
         this.response.token = undefined;
-        this.response.expired = false;
-        this.response.error = true;
-        this.response.success = false;
+        this.response.status = 'error'
 
         this.$emit('error', this.response);
-      },
+      }
     }
   }
 </script>
