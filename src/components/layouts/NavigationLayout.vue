@@ -1,5 +1,5 @@
 <template>
-  <a-menu class="menu" mode="horizontal">
+  <a-menu class="menu" mode="horizontal" :selectedKeys="[selectedKey]">
     <a-menu-item>
       <router-link to="/"> <a-icon type="home" /> Trang chủ </router-link>
     </a-menu-item>
@@ -8,12 +8,17 @@
       <span slot="title" class="submenu-title-wrapper">
         <a-icon type="user" />{{ username || 'Guest' }}
       </span>
-      <a-menu-item v-if="username" key="LoginPage">
+      <a-menu-item v-if="username" @click="logout">
         <a-icon type="logout" /> Đăng xuất
       </a-menu-item>
       <a-menu-item v-if="!username" key="LoginPage">
         <router-link to="/auth/login">
           <a-icon type="login" /> Đăng nhập
+        </router-link>
+      </a-menu-item>
+      <a-menu-item v-if="!username" key="RegisterPage">
+        <router-link to="/auth/register">
+          <a-icon type="user-add" /> Đăng ký
         </router-link>
       </a-menu-item>
     </a-sub-menu>
@@ -37,9 +42,31 @@
 </style>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 
 export default {
   name: 'NavigationLayout',
+
+  computed: {
+    ...mapGetters("auth", {
+      username: "getUsername"
+    }),
+
+    selectedKey() {
+      return this.$route.name;
+    }
+  },
+
+  methods: {
+    ...mapActions("auth", {
+      removeSession: "removeSession"
+    }),
+
+    logout() {
+      this.removeSession();
+      this.$router.push({name: "LoginPage"});
+    }
+  }
 }
 
 </script>

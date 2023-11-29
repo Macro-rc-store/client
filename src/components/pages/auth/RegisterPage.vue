@@ -26,10 +26,11 @@
         </google-recaptcha>
       </a-form-model-item>
       <a-form-model-item class="centered-btn">
-        <a-button type="primary" @click="handleRegister" :loading="registerLoading"> Đăng ký </a-button>
-        <a-button type="link">
-          <router-link to="/auth/login"> Đăng nhập </router-link>
-        </a-button>
+        <a-button type="primary" @click="handleRegister" :loading="registerLoading" style="font-size: larger;"> Đăng ký </a-button>
+      </a-form-model-item>
+      <a-form-model-item class="centered-btn">
+        Đã có tài khoản?  
+        <router-link to="/auth/login" style="font-size: larger;"> Đăng nhập </router-link>
       </a-form-model-item>
     </a-form-model>
   </a-card>
@@ -55,11 +56,11 @@
 .centered-btn {
   display: flex;
   justify-content: center;
-  margin-bottom: 15px !important;
 }
 </style>
   
 <script>
+import { mapActions } from 'vuex';
 import GoogleRecaptcha from './GoogleRecaptcha.vue';
 
 export default {
@@ -79,6 +80,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions("auth", {
+      register: "register"
+    }),
     verifyReCaptcha(response) {
       this.registerCredentials.responseRecaptcha = response;
     },
@@ -100,8 +104,13 @@ export default {
     async handleRegister() {
       this.registerLoading = true;
 
-      this.$message.success("Register account success!");
-      this.$router.push({name: 'LoginPage'});
+      try {
+        await this.register(this.registerCredentials);
+        this.$message.success("Register account success!");
+        this.$router.push({name: 'LoginPage'});
+      } catch (error) {
+        this.$message.error(error?.response?.data?.error?.message || error?.response?.data || error.message);
+      }
 
       this.registerLoading = false;
     },

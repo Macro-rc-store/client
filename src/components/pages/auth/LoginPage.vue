@@ -12,14 +12,18 @@
         </a-input>
       </a-form-model-item>
       <a-form-model-item>
-        <google-recaptcha 
+        <google-recaptcha
           @verify="verifyReCaptcha" 
           @expired="expiredReCaptcha"
           @error="errorRecaptcha">
         </google-recaptcha>
       </a-form-model-item>
       <a-form-model-item class="centered-btn">
-        <a-button type="primary" @click="handleLogin" :loading="loginLoading"> Đăng nhập </a-button>
+        <a-button type="primary" @click="handleLogin" :loading="loginLoading" style="font-size: larger;"> Đăng nhập </a-button>
+      </a-form-model-item>
+      <a-form-model-item class="centered-btn">
+        Chưa có tài khoản? 
+        <router-link to="/auth/register" style="font-size: larger;"> Đăng ký ngay! </router-link>
       </a-form-model-item>
     </a-form-model>
   </a-card>
@@ -45,7 +49,6 @@
 .centered-btn {
   display: flex;
   justify-content: center;
-  margin-bottom: 15px !important;
 }
 </style>
 

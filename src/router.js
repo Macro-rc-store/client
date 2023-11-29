@@ -6,7 +6,8 @@ import NotFound from "@/components/errors/NotFound.vue";
 
 import HomePage from "@/components/pages/HomePage.vue";
 
-import LoginPage from "@/components/pages/auth/LoginPage.vue"
+import LoginPage from "@/components/pages/auth/LoginPage.vue";
+import RegisterPage from "@/components/pages/auth/RegisterPage.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: '/auth/login',
     name: 'LoginPage',
     component: LoginPage
+  },
+  {
+    path: '/auth/register',
+    name: 'RegisterPage',
+    component: RegisterPage
   },
   {
     path: '*',
