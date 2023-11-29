@@ -17,3 +17,8 @@ export async function register({commit}, params) {
   const {data} = await AuthServices.register(params);
   return data;
 }
+
+export async function getProfile() {
+  const {data} = await AuthServices.profile();
+  return data;
+}

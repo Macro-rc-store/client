@@ -12,6 +12,11 @@
         </a-input>
       </a-form-model-item>
       <a-form-model-item>
+        <a-checkbox v-model="loginCredentials.remember">
+          Remember
+        </a-checkbox>
+      </a-form-model-item>
+      <a-form-model-item>
         <google-recaptcha
           @verify="verifyReCaptcha" 
           @expired="expiredReCaptcha"
@@ -66,6 +71,7 @@ export default {
       loginCredentials: {
         username: undefined,
         password: undefined,
+        remember: false,
         responseRecaptcha: {}
       },
       loginLoading: false,

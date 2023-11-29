@@ -8,8 +8,13 @@
       <span slot="title" class="submenu-title-wrapper">
         <a-icon type="user" />{{ username || 'Guest' }}
       </span>
-      <a-menu-item v-if="username" @click="logout">
+      <a-menu-item v-if="username" key="LoginPage" @click="logout">
         <a-icon type="logout" /> Đăng xuất
+      </a-menu-item>
+      <a-menu-item v-if="username" key="ChangePasswordPage">
+        <router-link to="/user/change-password">
+          <a-icon type="edit" /> Đổi mật khẩu
+        </router-link>
       </a-menu-item>
       <a-menu-item v-if="!username" key="LoginPage">
         <router-link to="/auth/login">

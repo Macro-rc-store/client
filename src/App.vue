@@ -21,16 +21,20 @@ import Footer from "@/components/layouts/FooterLayout.vue"
 export default {
   data() {
     return {
-      publicPage: ["HomePage", "Setting", "LoginPage"]
+      publicPage: ["HomePage", "RegisterPage", "LoginPage"]
     }
   },
 
-  name: 'App',
+  name: 'CommonLayout',
 
   components: {
     Navigation,
     Content,
     Footer
+  },
+
+  mounted() {
+    this.validateSession();
   },
 
   computed: {
@@ -45,6 +49,7 @@ export default {
 
   methods: {
     ...mapActions("auth", {
+      getProfile: "getProfile",
       removeSession: "removeSession"
     }),
 
@@ -52,15 +57,40 @@ export default {
       return this.publicPage.includes(this.$route.name);
     },
 
-    validateSession() {
-      if(!this.inPublicPage()) {
-        if(!this.username) {
-          this.$message.error("You are not logged in!");
-          this.removeSession();
-          this.$router.push({name: 'LoginPage'});
+    async callApi(func, onError) {
+      try {
+        await func();
+      }
+      catch(error) {
+        if (onError) {
+          onError();
         }
+
+        this.$message.error(error?.response?.data?.error?.message || error?.response?.data || error?.message);
       }
     },
+
+    async validateSession() {
+      if (!this.inPublicPage()) {
+        try {
+          await this.getProfile();
+        }
+        catch(err) {
+          if ((this.$route.name != 'LoginPage') || (this.$route.name != 'RegisterPage')) {
+            this.$message.error(err?.response?.data || err.message);
+          }
+          this.removeSession();
+          this.$router.push({name: 'LoginPage'});
+        } 
+      }
+    }
+  },
+
+  watch: {
+    // eslint-disable-next-line no-unused-vars
+    route(nextRoute) {
+      this.validateSession();
+    }
   }
 }
 </script>

@@ -8,6 +8,7 @@ import HomePage from "@/components/pages/HomePage.vue";
 
 import LoginPage from "@/components/pages/auth/LoginPage.vue";
 import RegisterPage from "@/components/pages/auth/RegisterPage.vue";
+import ChangePasswordPage from "@/components/pages/account/ChangePasswordPage.vue"
 
 const routes = [
   {
@@ -26,6 +27,11 @@ const routes = [
     component: RegisterPage
   },
   {
+    path: '/user/change-password',
+    name: 'ChangePasswordPage',
+    component: ChangePasswordPage
+  },
+  {
     path: '*',
     name: 'NotFound',
     component: NotFound
@@ -36,7 +42,7 @@ Vue.use(VueRouter);
 
 const router = new VueRouter({
   mode: 'history',
-  routes: routes
+  routes
 });
 
 export default router;
