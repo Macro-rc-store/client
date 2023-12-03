@@ -21,7 +21,8 @@ import Footer from "@/components/layouts/FooterLayout.vue"
 export default {
   data() {
     return {
-      publicPage: ["HomePage", "RegisterPage", "LoginPage"]
+      guestPage: ["HomePage", "RegisterPage", "LoginPage"],
+      authenPage: ["RegisterPage", "LoginPage"]
     }
   },
 
@@ -53,8 +54,11 @@ export default {
       removeSession: "removeSession"
     }),
 
-    inPublicPage() {
-      return this.publicPage.includes(this.$route.name);
+    inGuestPage() {
+      return this.guestPage.includes(this.$route.name);
+    },
+    inAuthenPage() {
+      return this.authenPage.includes(this.$route.name);
     },
 
     async callApi(func, onError) {
@@ -71,7 +75,7 @@ export default {
     },
 
     async validateSession() {
-      if (!this.inPublicPage()) {
+      if (!this.inGuestPage()) {
         try {
           await this.getProfile();
         }
@@ -82,6 +86,17 @@ export default {
           this.removeSession();
           this.$router.push({name: 'LoginPage'});
         } 
+      }
+      else if(this.inAuthenPage()) {
+        try {
+          await this.getProfile();
+          this.$message.info("You are logged in!");
+          this.$router.push({name: 'HomePage'});
+        }
+        catch(err) {
+          this.removeSession();
+          return;
+        }
       }
     }
   },

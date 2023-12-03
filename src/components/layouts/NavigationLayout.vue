@@ -4,17 +4,26 @@
       <router-link to="/"> <a-icon type="home" /> Trang chủ </router-link>
     </a-menu-item>
 
+    <a-sub-menu v-if="username">
+        <span slot="title" class="submenu-title-wrapper"><a-icon type="appstore" /> Bảng giá dịch vụ </span>
+        <a-menu-item key="MailList">
+          <router-link to="/services/mail">
+            <a-icon type="mail" /> Mail
+          </router-link>
+        </a-menu-item>
+      </a-sub-menu>
+
     <a-sub-menu class="user-dropdown">
       <span slot="title" class="submenu-title-wrapper">
         <a-icon type="user" />{{ username || 'Guest' }}
       </span>
+      <a-menu-item v-if="username" key="LoginPage">
+        <router-link to="/user-dashboard">
+          <a-icon type="idcard" /> Xem tài khoản
+        </router-link>
+      </a-menu-item>
       <a-menu-item v-if="username" key="LoginPage" @click="logout">
         <a-icon type="logout" /> Đăng xuất
-      </a-menu-item>
-      <a-menu-item v-if="username" key="ChangePasswordPage">
-        <router-link to="/user/change-password">
-          <a-icon type="edit" /> Đổi mật khẩu
-        </router-link>
       </a-menu-item>
       <a-menu-item v-if="!username" key="LoginPage">
         <router-link to="/auth/login">
@@ -69,6 +78,7 @@ export default {
 
     logout() {
       this.removeSession();
+      this.$message.success("Logout success!");
       this.$router.push({name: "LoginPage"});
     }
   }
