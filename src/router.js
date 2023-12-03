@@ -1,7 +1,7 @@
 import VueRouter from "vue-router";
 import Vue from "vue";
 
-// import pages
+// Import pages
 import NotFound from "@/components/errors/NotFound.vue";
 
 import HomePage from "@/components/pages/HomePage.vue";
@@ -11,8 +11,11 @@ import MailServices from "@/components/pages/services/MailServices.vue";
 import LoginPage from "@/components/pages/auth/LoginPage.vue";
 import RegisterPage from "@/components/pages/auth/RegisterPage.vue";
 
-import UserDashboard from "@/components/pages/account/UserDashboard.vue"
-import ChangePasswordPage from "@/components/pages/account/ChangePasswordPage.vue"
+import UserDashboard from "@/components/pages/account/UserDashboard.vue";
+import ChangePasswordPage from "@/components/pages/account/ChangePasswordPage.vue";
+import ProfilePage from "@/components/pages/account/ProfilePage.vue";
+import RechargePage from "@/components/pages/account/RechargePage.vue";
+import PaymentHistory from "@/components/pages/account/PaymentHistoryPage.vue";
 
 
 // Define router
@@ -43,8 +46,24 @@ const routes = [
     component: UserDashboard,
     children: [
       {
-        path: '/change-password',
-        component: {changePassword: ChangePasswordPage}
+        path: '/',
+        name: 'ProfilePage',
+        component: ProfilePage
+      },
+      {
+        path: 'change-password',
+        name: 'ChangePasswordPage',
+        component: ChangePasswordPage
+      },
+      {
+        path: 'recharge',
+        name: 'RechargePage',
+        component: RechargePage
+      },
+      {
+        path: 'payment-history',
+        name: 'PaymentHistory',
+        component: PaymentHistory
       }
     ]
   },

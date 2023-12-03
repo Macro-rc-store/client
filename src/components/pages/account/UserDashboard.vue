@@ -1,41 +1,46 @@
 <template>
-  <div>
-    <a-menu class="menu" mode="horizontal" :selectedKeys="[selectedKey]">
-      <a-menu-item>
-        <router-link to="/profile"> 
-          <a-icon type="home" /> Profile 
-        </router-link>
-      </a-menu-item>
-      <a-menu-item>
-        <router-link to="/profile"> 
-          <a-icon type="home" /> Nạp tiền 
-        </router-link>
-      </a-menu-item>
-      <a-menu-item>
-        <router-link to="/profile"> 
-          <a-icon type="home" /> Lịch sử giao dịch 
-        </router-link>
-      </a-menu-item>
-      <a-menu-item key="ChangePasswordPage">
-        <router-link to="/user-dashboard/change-password"> 
-          <a-icon type="edit" /> Đổi mật khẩu 
-        </router-link>
-      </a-menu-item>
+  <a-layout>
 
-      <a-menu-item class="user-dropdown" @click="logout">
-        <a-icon type="logout" /> Đăng xuất
-      </a-menu-item>
-    </a-menu>
-    <div><router-view></router-view></div>
-  </div>
+    <a-layout-sider>
+      <a-menu 
+        class="menu" mode="inline" 
+        :selectedKeys="[selectedKey]" 
+        :style="{ height: '100%', borderRight: 0 }">
+
+        <a-menu-item>
+          <router-link to="/user-dashboard/">
+            <a-icon type="profile" /> Profile
+          </router-link>
+        </a-menu-item>
+        <a-menu-item>
+          <router-link to="/user-dashboard/recharge">
+            <a-icon type="credit-card" /> Nạp tiền
+          </router-link>
+        </a-menu-item>
+        <a-menu-item>
+          <router-link to="/user-dashboard/payment-history">
+            <a-icon type="transaction" /> Lịch sử giao dịch
+          </router-link>
+        </a-menu-item>
+        <a-menu-item key="ChangePasswordPage">
+          <router-link to="/user-dashboard/change-password">
+            <a-icon type="edit" /> Đổi mật khẩu
+          </router-link>
+        </a-menu-item>
+        <a-menu-item class="user-dropdown" @click="logout">
+          <a-icon type="logout" /> Đăng xuất
+        </a-menu-item>
+      </a-menu>
+    </a-layout-sider>
+
+    <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '200px' }">
+      <router-view></router-view>
+    </a-layout-content>
+    
+  </a-layout>
 </template>
 
-<style>
-.user-dropdown {
-  float: right;
-  margin-left: auto;
-}
-</style>
+<style></style>
 
 <script>
 import { mapActions } from 'vuex';
@@ -55,7 +60,7 @@ export default {
     logout() {
       this.removeSession();
       this.$message.success("Logout success!");
-      this.$router.push({name: "LoginPage"});
+      this.$router.push({ name: "LoginPage" });
     }
   }
 }

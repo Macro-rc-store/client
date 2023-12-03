@@ -1,26 +1,24 @@
 <template>
-  <a-card title="Đổi mật khẩu" class="root-card">
-    <a-form-model layout="horizontal" class="centered-form">
-      <a-form-model-item>
-        <a-input type="password" placeholder="Current password" v-model="verification.currentPassword">
-          <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
-        </a-input>
-      </a-form-model-item>
-      <a-form-model-item>
-        <a-input type="password" placeholder="New Password" v-model="verification.newPassword">
-          <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
-        </a-input>
-      </a-form-model-item>
-      <a-form-model-item>
-        <a-input type="password" placeholder="Confirm password" v-model="verification.confirmPassword">
-          <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
-        </a-input>
-      </a-form-model-item>
-      <a-form-model-item class="centered-btn">
-        <a-button type="primary" @click="handleChangePassword" :loading="changePassLoading">Đổi mật khẩu</a-button>
-      </a-form-model-item>
-    </a-form-model>
-  </a-card>
+  <a-form-model layout="horizontal" class="centered-form">
+    <a-form-model-item>
+      <a-input type="password" placeholder="Current password" v-model="verification.currentPassword">
+        <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
+      </a-input>
+    </a-form-model-item>
+    <a-form-model-item>
+      <a-input type="password" placeholder="New Password" v-model="verification.newPassword">
+        <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
+      </a-input>
+    </a-form-model-item>
+    <a-form-model-item>
+      <a-input type="password" placeholder="Confirm password" v-model="verification.confirmPassword">
+        <a-icon slot="prefix" type="lock" style="color:rgba(0,0,0,.25)" />
+      </a-input>
+    </a-form-model-item>
+    <a-form-model-item class="centered-btn">
+      <a-button type="primary" @click="handleChangePassword" :loading="changePassLoading">Đổi mật khẩu</a-button>
+    </a-form-model-item>
+  </a-form-model>
 </template>
       
 <style scoped>
