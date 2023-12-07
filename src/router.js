@@ -46,7 +46,7 @@ const routes = [
     component: UserDashboard,
     children: [
       {
-        path: '/',
+        path: 'profile',
         name: 'ProfilePage',
         component: ProfilePage
       },

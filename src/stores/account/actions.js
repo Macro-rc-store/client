@@ -1,7 +1,12 @@
+/* eslint-disable no-unused-vars */
 import AccountService from "@/services/account";
 
-// eslint-disable-next-line no-unused-vars
 export async function changePassword({commit}, params) {
   const {data} = await AccountService.changePassword(params);
+  return data;
+}
+
+export async function getInfo({commit}) {
+  const {data} = await AccountService.getInfo();
   return data;
 }

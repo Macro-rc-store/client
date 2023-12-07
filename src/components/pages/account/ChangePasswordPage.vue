@@ -69,10 +69,9 @@ export default {
       try {
         const { message } = await this.changePassword(this.verification);
         this.$message.success(message);
-        this.$router.push({ name: 'Home' });
+        this.$router.push({ name: 'HomePage' });
       }
       catch (error) {
-        console.log(this.verification);
         this.$message.error(error?.response?.data?.error?.message || error?.response?.data || error.message);
       }
       this.changePassLoading = false;

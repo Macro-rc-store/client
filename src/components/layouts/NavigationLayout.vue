@@ -17,12 +17,12 @@
       <span slot="title" class="submenu-title-wrapper">
         <a-icon type="user" />{{ username || 'Guest' }}
       </span>
-      <a-menu-item v-if="username" key="LoginPage">
-        <router-link to="/user-dashboard">
+      <a-menu-item v-if="username" key="UserDashboard">
+        <router-link to="/user-dashboard/profile">
           <a-icon type="idcard" /> Xem tài khoản
         </router-link>
       </a-menu-item>
-      <a-menu-item v-if="username" key="LoginPage" @click="logout">
+      <a-menu-item v-if="username" @click="logout">
         <a-icon type="logout" /> Đăng xuất
       </a-menu-item>
       <a-menu-item v-if="!username" key="LoginPage">
