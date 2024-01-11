@@ -1,6 +1,6 @@
 <template>
-  <a-card title="Đăng nhập" class="root-card">
-    <router-link slot="extra" to="/admin/login">Đăng nhập admin</router-link>
+  <a-card title="Đăng nhập (ADMIN)" class="root-card">
+    <router-link slot="extra" to="/auth/login">Trở về</router-link>
     <a-form-model layout="horizontal" class="centered-form">
       <a-form-model-item>
         <a-input placeholder="Username" v-model="loginCredentials.username">
@@ -26,10 +26,6 @@
       </a-form-model-item>
       <a-form-model-item class="centered-btn">
         <a-button type="primary" @click="handleLogin" :loading="loginLoading" style="font-size: larger;"> Đăng nhập </a-button>
-      </a-form-model-item>
-      <a-form-model-item class="centered-btn">
-        Chưa có tài khoản? 
-        <router-link to="/auth/register" style="font-size: larger;"> Đăng ký ngay! </router-link>
       </a-form-model-item>
     </a-form-model>
   </a-card>
@@ -73,7 +69,7 @@ export default {
         username: undefined,
         password: undefined,
         remember: false,
-        role: 'user',
+        role: 'admin',
         responseRecaptcha: {}
       },
       loginLoading: false,

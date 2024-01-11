@@ -1,7 +1,7 @@
 import { SET_SESSION, REMOVE_SESSION } from "./types";
 
 const SERVICE_ACCESS_TOKEN_KEY = 'access_token';
-const SESSION_USERNAME = "username";
+const SESSION_USER = "userInfo";
 
 function decodeJwt(jwt) {
   const payloadBase64Url = jwt.split('.')[1];
@@ -11,34 +11,75 @@ function decodeJwt(jwt) {
   return payload;
 }
 
+function getUser() {
+  const accessToken = localStorage.getItem(SERVICE_ACCESS_TOKEN_KEY);
+
+  if(!accessToken) {
+    return;
+  }
+
+  try {
+    const payload = decodeJwt(accessToken);
+    const userInfo = {
+      name: payload.username,
+      email: payload.email,
+      role: payload.role
+    }
+    localStorage.setItem(SESSION_USER, JSON.stringify(userInfo));
+    return payload.username;
+  } catch (error) {
+    return;
+  }
+}
+
+function getRole() {
+  const accessToken = localStorage.getItem(SERVICE_ACCESS_TOKEN_KEY);
+
+  if(!accessToken) {
+    return;
+  }
+
+  try {
+    const payload = decodeJwt(accessToken);
+    return payload.role;
+  } catch (error) {
+    return;
+  }
+}
+
 const state = {
   accessToken: localStorage.getItem(SERVICE_ACCESS_TOKEN_KEY) || undefined,
-  username: localStorage.getItem(SESSION_USERNAME) || undefined
+  username: getUser() || undefined,
+  role: getRole() || undefined
 }
 
 const mutations = {
   [SET_SESSION](state, accessToken) {
     let username = null;
+    let role = null;
 
     try {
       const payload = decodeJwt(accessToken);
       username = payload.username;
+      role = payload.role;
     } catch (error) {
       username = null;
+      role = null;
     }
 
     state.accessToken = accessToken;
     state.username = username;
-
+    state.role = role;
+    
     localStorage.setItem(SERVICE_ACCESS_TOKEN_KEY, accessToken);
-    localStorage.setItem(SESSION_USERNAME, username)
   },
 
   [REMOVE_SESSION](state) {
     state.accessToken = undefined;
     state.username = undefined;
+    state.role = undefined;
     localStorage.removeItem(SERVICE_ACCESS_TOKEN_KEY);
-    localStorage.removeItem(SESSION_USERNAME);
+    localStorage.removeItem(SESSION_USER);
   }
 }
 

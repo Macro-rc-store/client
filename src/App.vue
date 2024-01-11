@@ -21,8 +21,9 @@ import Footer from "@/components/layouts/FooterLayout.vue"
 export default {
   data() {
     return {
-      guestPage: ["HomePage", "RegisterPage", "LoginPage"],
-      authenPage: ["RegisterPage", "LoginPage"]
+      guestPage: ["HomePage", "RegisterPage", "LoginPage", "LoginAdmin"],
+      authenPage: ["RegisterPage", "LoginPage", "LoginAdmin"],
+      adminPage: []
     }
   },
 
@@ -60,6 +61,9 @@ export default {
     inAuthenPage() {
       return this.authenPage.includes(this.$route.name);
     },
+    inAdminPage() {
+      return this.adminPage.includes(this.$route.name);
+    },
 
     async callApi(func, onError) {
       try {
@@ -77,7 +81,15 @@ export default {
     async validateSession() {
       if (!this.inGuestPage()) {
         try {
-          await this.getProfile();
+          const user = await this.getProfile();
+          if(this.inAdminPage() && (user.data.role != "admin")) {
+            this.$message.error("Chỉ admin được truy cập!");
+            this.$router.push({name: 'HomePage'});
+          }
+          else if(!this.inAdminPage() && (user.data.role === "admin")) {
+            this.$message.error("Đang ở trang admin!");
+            this.$router.push({name: 'HomePage'});
+          }
         }
         catch(err) {
           if ((this.$route.name != 'LoginPage') || (this.$route.name != 'RegisterPage')) {
@@ -90,7 +102,7 @@ export default {
       else if(this.inAuthenPage()) {
         try {
           await this.getProfile();
-          this.$message.info("You are logged in!");
+          this.$message.info("Bạn đã đăng nhập rồi!");
           this.$router.push({name: 'HomePage'});
         }
         catch(err) {

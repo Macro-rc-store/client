@@ -98,7 +98,7 @@ export default {
     },
 
     handleChangeText(value) {
-      this.dataSource = (!value || value.indexOf('@') >= 0) ? [] : [`${value}@gmail.com`];
+      this.dataSource = (!value || value.indexOf('@') >= 0) ? [] : [`${value}@gmail.com`, `${value}@hotmail.com`, `${value}@outlook.com`];
     },
 
     async handleRegister() {

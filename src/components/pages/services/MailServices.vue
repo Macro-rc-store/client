@@ -1,5 +1,3 @@
-
-import { login } from '@/stores/auth/actions';
 <!-- eslint-disable vue/no-unused-vars -->
 <template>
   <div>
@@ -41,14 +39,13 @@ import { login } from '@/stores/auth/actions';
 
         <a-form-model-item label="Thành tiền">
           <a-input 
-            :default-value="0"
             v-model="productOrder.payment"
             addon-after="VND" read-only 
             style="width: 100%;"/>
         </a-form-model-item>
 
         <a-form-model-item>
-          <a-button type="primary" block>
+          <a-button type="primary" :disabled="disableBuyProduct" @click="buyProduct" block>
             Mua ngay!
           </a-button>
         </a-form-model-item>
@@ -102,15 +99,18 @@ export default {
       data,
       columns,
       visibleBuyMailModal: false,
+      disableBuyProduct: false,
       confirmLoading: false,
+
       productInfor: {
         name: undefined,
         price: undefined,        
         quantity: undefined
       },
       originalProductInfor: {},
+
       productOrder: {
-        quantity: undefined,
+        quantity: 1,
         payment: undefined
       },
       originalProductOrder: {}
@@ -124,19 +124,30 @@ export default {
     },
 
     showBuyMailModal(product) {
-      this.confirmLoading = true;
-
       this.originalProductOrder = {...this.productOrder};
       this.productInfor.name = product.name;
       this.productInfor.quantity = Number(product.quantity);
       this.productInfor.price = Number(product.price);
+      this.productOrder.payment = this.productOrder.quantity * this.productInfor.price;
 
       this.visibleBuyMailModal = true;
-      this.confirmLoading = false;
     },
 
     paymentUpdate() {
+      if((this.productOrder.quantity>this.productInfor.quantity) || (this.productOrder.quantity<1) || (typeof this.productOrder.quantity!='number'))
+        this.disableBuyProduct = true;
+      else
+        this.disableBuyProduct = false;
+
       this.productOrder.payment = this.productOrder.quantity * this.productInfor.price;
+    },
+
+    buyProduct() {
+      this.confirmLoading = true;
+
+      console.log(this.productOrder.quantity);
+
+      this.confirmLoading = false;
     }
   }
 };

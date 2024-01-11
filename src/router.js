@@ -9,6 +9,7 @@ import HomePage from "@/components/pages/HomePage.vue";
 import MailServices from "@/components/pages/services/MailServices.vue";
 
 import LoginPage from "@/components/pages/auth/LoginPage.vue";
+import LoginAdmin from "@/components/pages/auth/LoginAdmin.vue";
 import RegisterPage from "@/components/pages/auth/RegisterPage.vue";
 
 import UserDashboard from "@/components/pages/account/UserDashboard.vue";
@@ -29,6 +30,11 @@ const routes = [
     path: '/services/mail',
     name: 'MailList',
     component: MailServices
+  },
+  {
+    path: '/admin/login',
+    name: 'LoginAdmin',
+    component: LoginAdmin
   },
   {
     path: '/auth/login',

@@ -1,23 +1,23 @@
 <template>
   <a-menu class="menu" mode="horizontal" :selectedKeys="[selectedKey]">
-    <a-menu-item>
+    <a-menu-item key="HomePage">
       <router-link to="/"> <a-icon type="home" /> Trang chủ </router-link>
     </a-menu-item>
 
-    <a-sub-menu v-if="username">
-        <span slot="title" class="submenu-title-wrapper"><a-icon type="appstore" /> Bảng giá dịch vụ </span>
-        <a-menu-item key="MailList">
-          <router-link to="/services/mail">
-            <a-icon type="mail" /> Mail
-          </router-link>
-        </a-menu-item>
-      </a-sub-menu>
+    <a-sub-menu v-if="isUser()">
+      <span slot="title" class="submenu-title-wrapper"><a-icon type="appstore" /> Bảng giá dịch vụ </span>
+      <a-menu-item key="MailList">
+        <router-link to="/services/mail">
+          <a-icon type="mail" /> Mail
+        </router-link>
+      </a-menu-item>
+    </a-sub-menu>
 
     <a-sub-menu class="user-dropdown">
       <span slot="title" class="submenu-title-wrapper">
         <a-icon type="user" />{{ username || 'Guest' }}
       </span>
-      <a-menu-item v-if="username" key="UserDashboard">
+      <a-menu-item v-if="isUser()" key="UserDashboard">
         <router-link to="/user-dashboard/profile">
           <a-icon type="idcard" /> Xem tài khoản
         </router-link>
@@ -63,7 +63,8 @@ export default {
 
   computed: {
     ...mapGetters("auth", {
-      username: "getUsername"
+      username: "getUsername",
+      role: "getRole"
     }),
 
     selectedKey() {
@@ -75,6 +76,14 @@ export default {
     ...mapActions("auth", {
       removeSession: "removeSession"
     }),
+
+    isUser() {
+      return (this.role === "user") ? true : false
+    },
+
+    isAdmin() {
+      return (this.role === "admin") ? true : false
+    },
 
     logout() {
       this.removeSession();
