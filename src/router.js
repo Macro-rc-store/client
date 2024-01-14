@@ -18,6 +18,8 @@ import ProfilePage from "@/components/pages/account/ProfilePage.vue";
 import RechargePage from "@/components/pages/account/RechargePage.vue";
 import PaymentHistory from "@/components/pages/account/PaymentHistoryPage.vue";
 
+import CategoryPage from "@/components/pages/admin/CategoryPage.vue"
+
 
 // Define router
 const routes = [
@@ -72,6 +74,11 @@ const routes = [
         component: PaymentHistory
       }
     ]
+  },
+  {
+    path: '/admin/category',
+    name: 'CategoryPage',
+    component: CategoryPage
   },
   {
     path: '*',

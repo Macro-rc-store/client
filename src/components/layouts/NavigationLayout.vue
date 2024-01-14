@@ -13,6 +13,15 @@
       </a-menu-item>
     </a-sub-menu>
 
+    <a-sub-menu v-if="isAdmin()">
+      <span slot="title" class="submenu-title-wrapper"><a-icon type="control" /> Quản lý </span>
+      <a-menu-item key="CategoryPage">
+        <router-link to="/admin/category">
+          <a-icon type="bars" /> Danh mục
+        </router-link>
+      </a-menu-item>
+    </a-sub-menu>
+
     <a-sub-menu class="user-dropdown">
       <span slot="title" class="submenu-title-wrapper">
         <a-icon type="user" />{{ username || 'Guest' }}

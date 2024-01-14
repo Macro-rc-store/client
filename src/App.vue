@@ -23,7 +23,7 @@ export default {
     return {
       guestPage: ["HomePage", "RegisterPage", "LoginPage", "LoginAdmin"],
       authenPage: ["RegisterPage", "LoginPage", "LoginAdmin"],
-      adminPage: []
+      adminPage: ["CategoryPage"]
     }
   },
 
