@@ -1,9 +1,8 @@
 import axios from "axios";
-import authStore from "@/stores/auth";
 
 export default () => {
   const serviceUri = location.protocol + "//" + location.hostname + ":3000";
-  const accessToken = authStore.state.accessToken;
+  const accessToken = localStorage.getItem('access_token') || undefined;
   const headers = {};
 
   if (accessToken) {

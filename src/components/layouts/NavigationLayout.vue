@@ -45,6 +45,11 @@
         </router-link>
       </a-menu-item>
     </a-sub-menu>
+    <a-menu-item class="user-dropdown" v-if="isUser()">
+      <router-link to="/user-dashboard/recharge">
+        Số dư: {{ balance }} VND
+      </router-link>
+    </a-menu-item>
   </a-menu>
 </template>
 
@@ -70,20 +75,32 @@ import { mapActions, mapGetters } from 'vuex';
 export default {
   name: 'NavigationLayout',
 
+  mounted() {
+    this.loadAccountData();
+  },
+
   computed: {
     ...mapGetters("auth", {
       username: "getUsername",
       role: "getRole"
     }),
 
+    ...mapGetters("account", {
+      balance: "getBalance"
+    }),
+
     selectedKey() {
       return this.$route.name;
-    }
+    },
   },
 
   methods: {
     ...mapActions("auth", {
       removeSession: "removeSession"
+    }),
+
+    ...mapActions("account", {
+      getInfo: "getInfo"
     }),
 
     isUser() {
@@ -98,6 +115,18 @@ export default {
       this.removeSession();
       this.$message.success("Logout success!");
       this.$router.push({name: "LoginPage"});
+    },
+
+    async loadAccountData() {
+      if(this.isUser()) {
+        await this.getInfo();
+      }
+    }
+  },
+  
+  watch: {
+    selectedKey() {
+      this.loadAccountData();
     }
   }
 }

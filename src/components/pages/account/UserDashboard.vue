@@ -24,6 +24,7 @@
             <a-icon type="edit" /> Đổi mật khẩu
           </router-link>
         </a-menu-item>
+        <a-menu-divider />
         <a-menu-item>
           <a-popconfirm placement="bottomRight" title="Bạn chắc chắn muốn đăng xuất?" :visible="visiblePopConfirm" ok-text="Có" cancel-text="Không"
             @visibleChange="handleVisibleConfirm" @confirm="logout">

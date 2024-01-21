@@ -65,23 +65,11 @@ export default {
       return this.adminPage.includes(this.$route.name);
     },
 
-    async callApi(func, onError) {
-      try {
-        await func();
-      }
-      catch(error) {
-        if (onError) {
-          onError();
-        }
-
-        this.$message.error(error?.response?.data?.error?.message || error?.response?.data || error?.message);
-      }
-    },
-
     async validateSession() {
       if (!this.inGuestPage()) {
         try {
           const user = await this.getProfile();
+
           if(this.inAdminPage() && (user.data.role != "admin")) {
             this.$message.error("Chỉ admin được truy cập!");
             this.$router.push({name: 'HomePage'});
